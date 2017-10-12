@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "detect_anoms <- function(data, y, k = 0.05, alpha = 0.1, num_obs_per_period = NULL,\n                         one_tail = FALSE, upper_tail = TRUE, verbose = FALSE) {\n\n\n  if(is.null(num_obs_per_period)){\n    stop(\"must supply period length for time series decomposition\")\n  }\n\n  num_obs <- nrow(data)\n\n  if(num_obs < num_obs_per_period * 2){\n    stop(\"Anom detection needs at least 2 periods worth of data\")\n  }\n\n  if (length(rle(is.na(c(NA,data[[2L]],NA)))$values)>3){\n    stop(\"Data contains non-leading NAs. We suggest replacing NAs with interpolated values (see na.approx in Zoo package).\")\n  } else {\n    data <- na.omit(data)\n  }\n\n  data_decomp <- stl(ts(data[[2L]], frequency = num_obs_per_period),\n                     s.window = \"periodic\", robust = TRUE)\n\n  judge <- simi_measure(data, y)\n\n  if(judge){\n\n    lag_info <- lag_caculation(data, y)\n    length <- dim(subset(y, y[[1L]]>=data[[1L]][1] & y[[1L]]<=data[[1L]][nrow(data)]))[1]\n    numbers <- dim(subset(y, y[[1L]]<data[[1L]][1]))[1] + 1\n    index <- numbers - lag_info\n    query <- reinterpolate(y[index:(length+index),][[2L]], dim(data)[1])\n    reference <- data[[2L]]\n    X2 <- cbind(query, 1)\n    results <- solve.QP(t(X2) %*% X2, t(reference) %*% X2, cbind(c(min(y[[2L]]), 1), c(1, 0)), c(0, 0))\n    baseline <- results$solution[2] + results$solution[1]*query\n    data <- data.frame(timestamp = data[[1L]], count = (data[[2L]]-data_decomp$time.series[,\"seasonal\"]-baseline))\n  } else {\n\n    length <- dim(subset(y, y[[1L]]>=data[[1L]][1] & y[[1L]]<=data[[1L]][nrow(data)]))[1]\n    numbers <- dim(subset(y, y[[1L]]<data[[1L]][1]))[1] + 1\n    query <- reinterpolate(y[numbers:(length+numbers),][[2L]], dim(data)[1])\n    reference <- data[[2L]]\n    X2 <- cbind(query, 1)\n    results <- solve.QP(t(X2) %*% X2, t(reference) %*% X2, cbind(c(min(y[[2L]]), 1), c(1, 0)), c(0, 0))\n    smoothed_baseline <- lowess(data_decomp$time.series[,\"trend\"], f=0.2)\n    data <- data.frame(timestamp = data[[1L]], count = (data[[2L]]-data_decomp$time.series[,\"seasonal\"]-smoothed_baseline$y))\n  }\n\n\n  max_outliers <- trunc(num_obs*k)\n\n  func_ma <- match.fun(median)\n  func_sigma <- match.fun(mad)\n\n  n <- length(data[[2L]])\n  R_idx <- as.Date(data[[1L]][1L:max_outliers])\n  num_anoms <- 0L\n\n  for (i in 1L:max_outliers){\n\n    if(one_tail){\n      if(upper_tail){\n        ares <- data[[2L]] - func_ma(data[[2L]])\n      } else {\n        ares <- func_ma(data[[2L]]) - data[[2L]]\n      }\n    } else {\n      ares = abs(data[[2L]] - func_ma(data[[2L]]))\n    }\n\n    data_sigma <- func_sigma(data[[2L]])\n    if(data_sigma == 0)\n      break\n\n    ares <- ares/data_sigma\n    R <- max(ares)\n\n    ttttt <- which(ares == R)[1L]\n\n    R_idx[i] <- data[[1L]][ttttt]\n\n    data <- data[-which(data[[1L]] == R_idx[i]), ]\n\n    if(one_tail){\n      p <- 1 - alpha/(n-i+1)\n    } else {\n      p <- 1 - alpha/(2*(n-i+1))\n    }\n\n    t <- qt(p,(n-i-1L))\n    lam <- t*(n-i) / sqrt((n-i-1+t**2)*(n-i+1))\n\n    if(R > lam)\n      num_anoms <- i\n  }\n\n  if(num_anoms > 0) {\n    R_idx <- R_idx[1L:num_anoms]\n  } else {\n    R_idx = NULL\n  }\n\n  if(judge){\n    return (list(R_idx = R_idx, coefficients = results$solution, lag=lag_info, similarity=judge))\n  } else {\n    return (list(R_idx = R_idx, coefficients = results$solution, lag=NULL, similarity=judge))\n  }\n}\n",
+    "created" : 1506566585411.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2874327769",
+    "id" : "1DB6ECC0",
+    "lastKnownWriteTime" : 1506324062,
+    "last_content_update" : 1506324062,
+    "path" : "~/workspace/UsagePrediction/R/DetectAnoms.R",
+    "project_path" : "R/DetectAnoms.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

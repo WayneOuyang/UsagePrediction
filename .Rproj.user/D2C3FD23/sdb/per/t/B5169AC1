@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "source(\"/Users/wayne/workspace/UsagePrediction/R/AnormalyDetection.R\")\nsource(\"/Users/wayne/workspace/UsagePrediction/R/DetectAnoms.R\")\nsource(\"/Users/wayne/workspace/UsagePrediction/R/util.R\")\nsource(\"/Users/wayne/workspace/UsagePrediction/R/comb_forecast.R\")\nsource(\"/Users/wayne/workspace/UsagePrediction/R/outlier_replace.R\")\nsource(\"/Users/wayne/workspace/UsagePrediction/R/prediction_method.R\")\nsource(\"/Users/wayne/workspace/UsagePrediction/R/main_function.R\")\n\ngeo <- 'NA'\nraw_data <- read.csv(paste0('/Users/wayne/workspace/PCG service parts/data/TopmostPN_filter_weekly_consumption(change)/TopmostPN_', geo, '_weekly_consumption_filter(change).csv'), header = TRUE)\nraw_data2 <- read.csv(paste0('/Users/wayne/workspace/PCG service parts/data/TopmostPN_ib_filter(change)/TopmostPN_', geo, '_ib_withdate_filter.csv'), header = FALSE)\nPN <- '00HT193'\nPN_usage <- raw_data[raw_data$TopmostPN==PN,]\nPN_usage$Data <- as.Date(PN_usage$Data)\nPN_usage$DataNum <- as.numeric(as.vector(PN_usage$DataNum))\nPN_usage <- PN_usage[, c('Data', 'DataNum')]\ncolnames(PN_usage) <- c('Date', 'Magnitude')\nPN_IB <- raw_data2[raw_data2$V1==PN,]\nPN_IB$V3 <- as.Date(PN_IB$V3)\nPN_IB$V4 <- as.numeric(as.vector(PN_IB$V4))\nPN_IB <- PN_IB[, c('V3', 'V4')]\ncolnames(PN_IB) <- c('Date', 'Magnitude')\nresults <- main_function(PN_usage, PN_IB, interval=26, percentage=1)\nresults$pred_plot <- results$pred_plot + ggplot2::geom_point(data=results$pred_results, ggplot2::aes_string(x=\"date\", y=\"IB\"), colour = \"#009E73\", alpha=0.6, size = 2)\nresults$pred_plot <- results$pred_plot + ggplot2::geom_line(data=results$pred_results, ggplot2::aes_string(x=\"date\", y=\"IB\"), colour = \"#56B4E9\", alpha=0.6)\n\n",
+    "created" : 1506576459500.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "30258901",
+    "id" : "B5169AC1",
+    "lastKnownWriteTime" : 1507787924,
+    "last_content_update" : 1507787924250,
+    "path" : "~/workspace/UsagePrediction/R/demo_code.R",
+    "project_path" : "R/demo_code.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

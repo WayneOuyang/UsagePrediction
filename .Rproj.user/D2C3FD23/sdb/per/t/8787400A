@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "get_range <- function(dfs, index = 2, y_log = F) {\n  vals <- dfs[[index]]\n  if(y_log) vals <- vals[vals > 0]\n  vrange = range(vals, na.rm=TRUE)\n  vmin = vrange[1]\n  vmax = vrange[2]\n  return(c(vmin, vmax))\n}\n\nsavePlot <- function(myPlot) {\n  pdf(\"myPlot.pdf\")\n  print(myPlot)\n  dev.off()\n}\n\nsimi_measure <- function(PN_usage, PN_IB){\n  PN_IB <- PN_IB[index(PN_IB) >= ss.estimate(PN_IB),]\n  PN_IB <- PN_IB[PN_IB[[1L]] <= PN_usage[[1L]][dim(PN_usage)[1]],]\n  query <- reinterpolate(PN_IB[[2L]], new.length = round(dim(PN_IB)[1]*4.34524))\n  query <- zscore(query)\n  PN_usage <- PN_usage[index(PN_usage) >= ss.estimate(PN_usage),]\n  PN_usage[[2L]] <- lowess(PN_usage[[2L]], f=0.2)$y\n  reference <- reinterpolate(PN_usage[[2L]], new.length = length(query))\n  reference <- zscore(reference)\n  score <- lb_improved(reference, query, window.size = 10, norm = 'L2')\n  if(score > 17) {\n    return(FALSE)\n  } else {\n    return(TRUE)\n  }\n}\n\nlag_caculation <- function(PN_usage, PN_IB) {\n\n  numbers <- dim(subset(PN_IB, PN_IB[[1L]]<PN_usage[[1L]][1]))[1] + 1\n  length <- dim(subset(PN_IB, PN_IB[[1L]]>=PN_usage[[1L]][1] & PN_IB[[1L]]<=PN_usage[[1L]][nrow(PN_usage)]))[1]\n  d.lbi <- list()\n  reference <- lowess(PN_usage[[2L]], f=0.2)$y\n  reference <- zscore(reference)\n  index <- 0\n  min.lbi <- .Machine$double.xmax\n  for(i in max(1,(numbers-12)):numbers){\n    query <- reinterpolate(PN_IB[i:(length+i),][[2L]], dim(PN_usage)[1])\n    query <- zscore(query)\n    d.lbi <- lb_improved(reference, query, window.size = 10, norm = 'L2')\n    if(d.lbi<min.lbi){\n      min.lbi <- d.lbi\n      index <- i\n    }\n  }\n  lag <- numbers - index\n  return(lag)\n}\n\nss.estimate <- function(train){\n  quantile.number <- quantile(train[[2L]], c(0.05, 0.1, 0.2, 0.25), na.rm = TRUE)\n  n <- 1\n  for(i in 3:nrow(train)){\n    judge <- !((train[[2L]][i] < quantile.number[3] & train[[2L]][i-1] < quantile.number[3] &\n                  train[[2L]][i-2] < quantile.number[3]) |\n                 (train[[2L]][i] < quantile.number[4] & train[[2L]][i-1] < quantile.number[4]) |\n                 (train[[2L]][i] < (mean(train[[2L]], na.rm = TRUE)/100) &\n                    train[[2L]][i-1] < (mean(train[[2L]], na.rm = TRUE)/100) &\n                    train[[2L]][i-2] < (mean(train[[2L]], na.rm = TRUE)/100))\n    )\n    if(judge){\n      break\n    }\n    n <- i\n  }\n  n\n}\n\nfrequency_measure <- function(PN_usage){\n  \n  if(mean(PN_usage[[2]])>5){\n    message <- \"high freq\"\n  } else {\n    message <- \"low freq\"\n  }\n  return(message)\n}\n\n\n",
+    "created" : 1506566694762.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2126147798",
+    "id" : "8787400A",
+    "lastKnownWriteTime" : 1507787658,
+    "last_content_update" : 1507787658094,
+    "path" : "~/workspace/UsagePrediction/R/util.R",
+    "project_path" : "R/util.R",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

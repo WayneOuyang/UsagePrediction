@@ -1,0 +1,282 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ini",
+				"initStateActions"
+			],
+			[
+				"init",
+				"initStateSpace"
+			],
+			[
+				"play",
+				"play"
+			],
+			[
+				"deal",
+				"dealer_hand"
+			],
+			[
+				"rnad",
+				"randomCard"
+			],
+			[
+				"player",
+				"player_hand"
+			],
+			[
+				"dealer",
+				"dealer_hand"
+			],
+			[
+				"rand",
+				"randomCard"
+			],
+			[
+				"pl",
+				"player_tot"
+			],
+			[
+				"pla",
+				"player_hand"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 354.0,
+		"last_filter": "ins",
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Theme",
+				"Material Theme: Activate theme"
+			],
+			[
+				"Mat",
+				"Material Theme: Configuration"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package COntrol",
+				"Package Control: Add Channel"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 496.0
+	},
+	"console":
+	{
+		"height": 130.0,
+		"history":
+		[
+			"ls",
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/wayne/workspace/DemandForecast/code/grouped.forecast.R",
+		"/Users/wayne/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/wayne/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/wayne/Library/Application Support/Sublime Text 3/Packages/User/Package Control.sublime-settings",
+		"/Users/wayne/workspace/DemandForecast/code/run7.R",
+		"/Users/wayne/workspace/demand forecast/code/grouped.forecast.R",
+		"/Users/wayne/workspace/DemandForecast/code/run9.R",
+		"/Users/wayne/workspace/PCGProject/R/demo_code.R",
+		"/Users/wayne/workspace/DemandForecast/code/run8.R",
+		"/Users/wayne/workspace/demand forecast/code/util.R",
+		"/Users/wayne/workspace/DemandForecast/code/util.R",
+		"/Users/wayne/workspace/demand forecast/code/run8.R",
+		"/Users/wayne/workspace/DemandForecast/code/run4.R",
+		"/Users/wayne/Downloads/2.2a/abum_elastic.f90",
+		"/Users/wayne/Downloads/2.2a/abum_gtnmod.f90",
+		"/Users/wayne/Downloads/2.2a/abum_bobyqa.f",
+		"/Users/wayne/Downloads/quantstrat.R",
+		"/Users/wayne/Downloads/2.2a/abum_rnd.f90",
+		"/Users/wayne/GoglandProjects/hellpworld/helloworld.go",
+		"/Users/wayne/GoglandProjects/hellpworld/helloworld",
+		"/Volumes/PDF Expert 2.2.1 MAS+iCloud [TNT]/Open Gatekeeper friendly",
+		"/Users/wayne/PycharmProjects/DemandForecast/WE_110-15IBR.pt",
+		"/Users/wayne/Desktop/Server-Entries-2017-07-17.json",
+		"/Users/wayne/workspace/demand forecast/prediction_accurary.txt",
+		"/Users/wayne/workspace/demand forecast/lenovo_family_sale_data.csv",
+		"/public.java",
+		"/private/etc/hosts",
+		"/Users/wayne/Downloads/yolo.weights",
+		"/Users/wayne/PycharmProjects/LSTM_tsc/UCR_TS_Archive_2015/ChlorineConcentration/ChlorineConcentration_TRAIN",
+		"/Users/wayne/PycharmProjects/LSTM_tsc/UCR_TS_Archive_2015/ChlorineConcentration/ChlorineConcentration_TEST",
+		"/Users/wayne/Downloads/for_internal-数据/scripts/aggregate_travel_time.py",
+		"/Users/wayne/Downloads/for_internal-数据/scripts/aggregate_volume.py",
+		"/Users/wayne/.ShadowsocksX/gfwlist.js",
+		"/Users/wayne/Downloads/8519OS_Code/8519OS_Code/Chapter 03/Machine Learning with Spark, Chapter 3. MovieLens 100k Analysis..py",
+		"/Users/wayne/Downloads/8519OS_Code/8519OS_Code/Chapter 01/scala-spark-app/src/main/scala/ScalaApp.scala",
+		"/Users/wayne/Downloads/8519OS_Code/8519OS_Code/Chapter 01/scala-spark-app/build.sbt",
+		"/Users/wayne/Downloads/8519OS_Code/8519OS_Code/Chapter 01/java-spark-app/pom.xml",
+		"/Users/wayne/Downloads/8519OS_Code/8519OS_Code/Chapter 01/README",
+		"/Users/wayne/Documents/Python/test.py",
+		"/Users/wayne/Documents/Python/reinforment_learning2.py"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 65.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 132.0
+	},
+	"pinned_build_system": "",
+	"project": "UsagePrediction.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

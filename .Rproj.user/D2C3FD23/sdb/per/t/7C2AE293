@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Forecast_comb <- function(obs, fhat, fhat_new= NULL, decay_factor=0.9, interval=26,\n                          Averaging_scheme=c(\"simple\", \"ols\", \"robust\", \"cls\", \"variance based\", \"best\")) {\n  pckg = c(\"quantreg\", \"quadprog\")\n  temp <- unlist(lapply(pckg, require, character.only=T))\n  if (!all(temp==1) ) {\n    stop(\"This function relies on packages \\\"quadprog\\\" and \\\"quantreg\\\".\n         Use ?install.packages if they are not yet installed. \\n\")\n  }\n  \n  if(1 < decay_factor || decay_factor <= 0){\n    stop(\"Warning: decay_factor is the statistical decay factor, and is between 0 and 1\")\n  }\n  \n  mat_err <- apply(fhat, 2, function(x) obs - x)\n  TT <- NROW(fhat)\n  TT_new <- NROW(fhat_new)\n  p <- NCOL(fhat)\n  pred <- NULL\n  sq_er <- function(obs, pred) { mean( (obs - pred)^2 )  }\n  \n  if(length(Averaging_scheme) != 1) {\n    stop(\"Pick only one of the following:\n         c(\\\"simple\\\", \\\"ols\\\", \\\"robust\\\", \\\"variance based\\\", \\\"cls\\\", \\\"best\\\")\")\n  }\n  \n  ## Different forecast averaging schemes\n  if(Averaging_scheme== \"simple\") {\n    pred <- apply(fhat, 1, mean)\n    weights <- matrix( 1/p, nrow = 1, ncol = p)\n    if (!is.null(fhat_new)) { pred_new <- apply(fhat_new, 1, mean) }\n  } else if (Averaging_scheme== \"ols\") {\n    decay_list <- decay_factor^((TT-1):0)\n    weights <- lm(obs ~ fhat, weights = decay_list)$coef\n    pred <- t(weights %*% t(cbind(rep(1, TT), fhat)))\n    if (!is.null(fhat_new)) { pred_new <- t(weights %*% t(cbind(rep(1, TT_new), fhat_new))) }\n  } else if (Averaging_scheme== \"cls\") {\n    cls1 = function(y, predictions){\n      Rinv <- solve(chol(t(predictions) %*% predictions))\n      C <- cbind(rep(1, NCOL(predictions)), diag(NCOL(predictions)))\n      b = c(1, rep(0, NCOL(predictions)))\n      d = t(y) %*% predictions\n      qp1 = solve.QP(Dmat= Rinv, factorized= TRUE, dvec= d, Amat= C, bvec = b, meq = 1)\n      weights = qp1$sol\n      yhatcls = t(weights %*% t(predictions))\n      list(yhat= yhatcls, weights= weights)\n    }\n    weights <- cls1(obs, fhat)$weights\n    pred <- t(weights %*% t(fhat))\n    if (!is.null(fhat_new)) { pred_new <- t(weights %*% t(fhat_new)) }\n  } else if (Averaging_scheme== \"robust\") {\n    decay_list <- decay_factor^((TT-1):0)\n    weights <- rq(obs ~ fhat, weights = decay_list)$coef\n    pred <- t(weights %*% t(cbind(rep(1,TT), fhat)))\n    if (!is.null(fhat_new)) { pred_new <- t(weights %*% t(cbind(rep(1, TT_new), fhat_new))) }\n  } else if (Averaging_scheme==\"variance based\") {\n    decay_list <- decay_factor^((TT-1):0)\n    temp = apply(mat_err^2, 2, weighted.mean, w=decay_list)/sum(apply(mat_err^2, 2, weighted.mean, w=decay_list))\n    weights <- (1/temp)/sum(1/temp)\n    pred <- t(weights %*% t(fhat))\n    if ( !is.null(fhat_new) ) { pred_new <- t(weights %*% t(fhat_new)) }\n  } else if (Averaging_scheme== \"best\") {\n    temp <- apply(fhat, 2, sq_er, obs= obs)\n    weights <- rep(0, p)\n    weights[which.min(temp)] <- 1\n    pred <- t(weights %*% t(fhat))\n    if (!is.null(fhat_new)) { pred_new <- t(weights %*% t(fhat_new)) }\n  }\n  if (is.null(fhat_new)) { pred_new <- NULL }\n  return( list(fitted= pred, pred = pred_new, weights = weights ) )\n  }",
+    "created" : 1507627705750.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2056568775",
+    "id" : "7C2AE293",
+    "lastKnownWriteTime" : 1507688717,
+    "last_content_update" : 1507688717643,
+    "path" : "~/workspace/UsagePrediction/R/comb_forecast.R",
+    "project_path" : "R/comb_forecast.R",
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
